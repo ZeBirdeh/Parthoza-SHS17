@@ -33,7 +33,7 @@ public class Assignment {
 	}
 	@SuppressWarnings("deprecation")
 	public int[] getDue(){
-		int[] outlst = {duedate.getDate(), duedate.getMonth()+1, duedate.getYear()+1900};
+		int[] outlst = {duedate.getDay(), duedate.getMonth(), duedate.getYear()+1900};
 		return outlst;
 	}
 	public int getID(){
@@ -52,13 +52,13 @@ public class Assignment {
 	
 	//Object Essentials
 	public String toString(){
-		return "Assignment "+name+":\n"+desc+"\nFor "+school+", due "+(duedate.getMonth()+1)+"/"+duedate.getDate();
+		return name+":\n"+desc+"\nFor "+school+", due "+(duedate.getMonth()+1)+"/"+duedate.getDate();
 	}
 	public boolean equals(Object obj){
 		if (!(obj instanceof Assignment)){
 			return false;
 		}
-		return ((Assignment)obj).aID == this.aID;
+		return ((Assignment)obj).name == this.name;
 	}
 	
 	//Application
