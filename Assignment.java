@@ -2,10 +2,13 @@ import java.util.Date;
 
 public class Assignment {
 	//Fields
-	String name;
-	String desc;
-	String school;
-	Date duedate;
+	private String name;
+	private String desc;
+	private String school;
+	private Date duedate;
+	private boolean complete;
+	private int aID;
+	private static int assignmentNum = 0;
 	
 	//Constructors
 	public Assignment(String nname, String ndesc, String nschool, Date ndate){
@@ -13,6 +16,9 @@ public class Assignment {
 		desc = ndesc;
 		school = nschool;
 		duedate = ndate;
+		complete = false;
+		assignmentNum++;
+		aID = assignmentNum;
 	}
 	
 	//Methods
@@ -30,13 +36,30 @@ public class Assignment {
 		int[] outlst = {duedate.getDay(), duedate.getMonth(), duedate.getYear()+1900};
 		return outlst;
 	}
+	public int getID(){
+		return aID;
+	}
+	
+	public void setDesc(String a){
+		desc = a;
+	}
+	public void setSchool(String a){
+		school = a;
+	}
+	public void toggleCompletion(){
+		complete = !complete;
+	}
 	
 	//Object Essentials
 	public String toString(){
 		return "Assignment "+name+":\n"+desc+"\nFor "+school+", due "+duedate.getMonth()+"/"+duedate.getDay();
 	}
-	
-	
+	public boolean equals(Object obj){
+		if (!(obj instanceof Assignment)){
+			return false;
+		}
+		return ((Assignment)obj).aID == this.aID;
+	}
 	
 	//Application
 	public static void main(String[] args){
