@@ -29,6 +29,62 @@ public class AssignmentMenu {
 		}
 		return outstr;
 	}
+	public void deleteAssignment(Assignment a){
+		Assignment[] tempList = new Assignment[aNum-1];
+		int c = 0;
+		for (int i=0;i<aList.length;i++){
+			if (!(a.equals(aList[i]))){
+				tempList[c] = aList[i];
+				c++;
+			}
+		}
+		aList = tempList;
+		aNum--;
+	}
+	
+	//Overloading the find assignment method
+	//It will only find the first assignment with those parameters
+	public Assignment getAssignment(String name){
+		for (int i=0;i<aList.length;i++){
+			if (aList[i].getName().equals(name)){
+				return aList[i];
+			}
+		}
+		return null;
+	}
+	public Assignment getAssignment(int id){
+		for (int i=0;i<aList.length;i++){
+			if (aList[i].getID()==id){
+				return aList[i];
+			}
+		}
+		return null;
+	}
+	public Assignment getAssignment(String name, int id){
+		for (int i=0;i<aList.length;i++){
+			if ((aList[i].getID()==id) && (aList[i].getName().equals(name))){
+				return aList[i];
+			}
+		}
+		return null;
+	}
+	
+	//Find all assignments with this in their name (in development)
+	public AssignmentMenu findAllAssignments(String name){
+		AssignmentMenu amu = new AssignmentMenu();
+		for (int i=0;i<aList.length;i++){
+			if (aList[i].getName().equals(name)){
+				amu.addAssignment(aList[i]);
+			}
+		}
+
+		//Part 2
+		String[] words = name.split(" ");
+		
+		
+		return amu;
+		
+	}
 	
 	//Application
 	public static void main(String[] args){
@@ -39,6 +95,6 @@ public class AssignmentMenu {
 		Assignment as2 = new Assignment("Eng HW","Write the essay","PHS",new Date());
 		am.addAssignment(as2);
 		System.out.println(am.dispAssignAsStr());
-		System.out.println(as2.getID());
+		System.out.println(am.findAllAssignments("HW"));
 	}
 }
