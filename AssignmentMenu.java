@@ -24,11 +24,35 @@ public class AssignmentMenu {
 	}
 	public String dispAssignAsStr(){
 		String outstr = "";
+		int totaldiff = 0;
 		for (int i=0;i<aList.length;i++){
-			outstr += aList[i].toString()+"\n\n";
+			if (!aList[i].getCompletion()){
+				totaldiff += aList[i].getDiff();
+				outstr += aList[i].toString()+"\n\n";
+			} else {
+				outstr += "DONE - " + aList[i].getName() + "\n\n";
+			}
 		}
+		outstr += (totaldiff > 0)?"Workload: "+totaldiff:"You are all done!";
 		return outstr;
 	}
+	/*
+	 * This version of the code leaves all the information from the Assignment (it uses the given toString of Assignment)
+	 * The currently used on will only display "DONE" and the title.
+	public String dispAssignAsStr(){
+		String outstr = "";
+		int totaldiff = 0;
+		for (int i=0;i<aList.length;i++){
+			if (!aList[i].getCompletion()){
+				totaldiff += aList[i].getDiff();
+			} else {
+				outstr += "DONE - ";
+			}
+			outstr += aList[i].toString()+"\n\n";
+		}
+		outstr += (totaldiff > 0)?"Workload: "+totaldiff:"You are all done!";
+		return outstr;
+	}*/
 	public void deleteAssignment(Assignment a){
 		Assignment[] tempList = new Assignment[aNum-1];
 		int c = 0;
@@ -40,6 +64,9 @@ public class AssignmentMenu {
 		}
 		aList = tempList;
 		aNum--;
+	}
+	public Assignment[] getAllAssignments(){
+		return aList;
 	}
 	
 	//Overloading the find assignment method
@@ -94,7 +121,9 @@ public class AssignmentMenu {
 		//System.out.println(am.dispAssignAsStr());
 		Assignment as2 = new Assignment("Eng HW","Write the essay","PHS",new Date());
 		am.addAssignment(as2);
+		as.setDiff(3);
+		as2.setDiff(10);
 		System.out.println(am.dispAssignAsStr());
-		System.out.println(am.findAllAssignments("HW"));
+		System.out.println(am.findAllAssignments("HW").dispAssignAsStr());
 	}
 }

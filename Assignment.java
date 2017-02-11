@@ -8,6 +8,7 @@ public class Assignment {
 	private Date duedate;
 	private boolean complete;
 	private int aID;
+	private int difficulty;
 	private static int assignmentNum = 0;
 	
 	//Constructors
@@ -19,6 +20,7 @@ public class Assignment {
 		complete = false;
 		assignmentNum++;
 		aID = assignmentNum;
+		difficulty = 5;
 	}
 	
 	//Methods
@@ -39,6 +41,12 @@ public class Assignment {
 	public int getID(){
 		return aID;
 	}
+	public int getDiff(){
+		return difficulty;
+	}
+	public boolean getCompletion(){
+		return complete;
+	}
 	
 	public void setDesc(String a){
 		desc = a;
@@ -48,6 +56,9 @@ public class Assignment {
 	}
 	public void toggleCompletion(){
 		complete = !complete;
+	}
+	public void setDiff(int diff){
+		difficulty = diff;
 	}
 	
 	//Object Essentials
