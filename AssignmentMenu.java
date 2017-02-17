@@ -24,10 +24,9 @@ public class AssignmentMenu {
 	}
 	public String dispAssignAsStr(){
 		String outstr = "";
-		int totaldiff = 0;
+		int totaldiff = getRemainingDiff();
 		for (int i=0;i<aList.length;i++){
 			if (!aList[i].getCompletion()){
-				totaldiff += aList[i].getDiff();
 				outstr += aList[i].toString()+"\n\n";
 			} else {
 				outstr += "DONE - " + aList[i].getName() + "\n\n";
@@ -35,6 +34,22 @@ public class AssignmentMenu {
 		}
 		outstr += (totaldiff > 0)?"Workload: "+totaldiff:"You are all done!";
 		return outstr;
+	}
+	public int getTotalDiff(){
+		int a = 0;
+		for (int i=0;i<aList.length;i++){
+			a += aList[i].getDiff();
+		}
+		return a;
+	}
+	public int getRemainingDiff(){
+		int diff = 0;
+		for (int i=0;i<aList.length;i++){
+			if (!aList[i].getCompletion()){
+				diff += aList[i].getDiff();
+			}
+		}
+		return diff;
 	}
 	/*
 	 * This version of the code leaves all the information from the Assignment (it uses the given toString of Assignment)
@@ -110,19 +125,16 @@ public class AssignmentMenu {
 		
 		
 		return amu;
-		
 	}
 	
 	//Application
 	public static void main(String[] args){
-		Assignment as = new Assignment("Math HW","Calc Worksheet","PHS",new Date());
+		Assignment as = new Assignment("Math HW","Calc Worksheet","PHS",new Date(),3);
 		AssignmentMenu am = new AssignmentMenu();
 		am.addAssignment(as);
 		//System.out.println(am.dispAssignAsStr());
-		Assignment as2 = new Assignment("Eng HW","Write the essay","PHS",new Date());
+		Assignment as2 = new Assignment("Eng HW","Write the essay","PHS",new Date(),10);
 		am.addAssignment(as2);
-		as.setDiff(3);
-		as2.setDiff(10);
 		System.out.println(am.dispAssignAsStr());
 		System.out.println(am.findAllAssignments("HW").dispAssignAsStr());
 	}

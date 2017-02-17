@@ -7,6 +7,8 @@ import javax.swing.*;
 public class DisplayScreen extends JFrame implements ActionListener{
 	private JTextArea banner;
 	private JTextField toggle;
+	private JButton addbutton;
+	private JTextField assignname;
 	private JButton button;
 	private static AssignmentMenu am;
 	
@@ -17,9 +19,27 @@ public class DisplayScreen extends JFrame implements ActionListener{
 		banner = new JTextArea("");
 		banner.setEditable(false);
 	    banner.setFont(new Font("Serif", Font.BOLD, 14));
-	    banner.setBackground(new Color(255,140,100));
-	    //add(banner);
 	    
+		assignname = new JTextField("");
+		assignname.setFont(new Font("Serif", Font.PLAIN, 14));
+	    
+	    addbutton = new JButton("Add Assignment");
+	    addbutton.setFont(new Font("Serif", Font.PLAIN, 14));
+	    addbutton.addActionListener(new ActionListener()
+	    {
+	    	public void actionPerformed(ActionEvent e)
+	    	{
+	    		//TODO Remove some of this useless syso comments
+	    		if (!toggle.getText().isEmpty()){
+	    			Assignment a = am.getAssignment(toggle.getText());
+	    			if (a != null){
+	    				a.toggleCompletion();
+	    				updateDisp("Your Assignments:\n\n"+am.dispAssignAsStr());
+	    			}
+	    		}
+	    	}
+	    });
+		
 	    toggle = new JTextField("");
 	    toggle.setFont(new Font("Serif", Font.PLAIN, 14));
 	    
@@ -34,10 +54,7 @@ public class DisplayScreen extends JFrame implements ActionListener{
 	    			Assignment a = am.getAssignment(toggle.getText());
 	    			if (a != null){
 	    				a.toggleCompletion();
-	    				System.out.println("You are cool, nice button press!");
-	    				setText("Your Assignments:\n\n"+am.dispAssignAsStr());
-	    			} else {
-	    				System.out.println("You are literally the most garbage person on this planet, go kill yourself");
+	    				updateDisp("Your Assignments:\n\n"+am.dispAssignAsStr());
 	    			}
 	    		}
 	    	}
@@ -57,8 +74,10 @@ public class DisplayScreen extends JFrame implements ActionListener{
 	    pane.add(button,c);
 	}
 	
-	public void setText(String n){
+	public void updateDisp(String n){
+		int ratio = (510*am.getRemainingDiff())/am.getTotalDiff();
 		banner.setText(n);
+		banner.setBackground(new Color(ratio<255?ratio:255,ratio>255?510-ratio:255,0));
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {
@@ -72,13 +91,13 @@ public class DisplayScreen extends JFrame implements ActionListener{
 	    //window.setResizable(false);
 	    window.setVisible(true);
 	    
-		Assignment as = new Assignment("Math HW","Calc Worksheet","PHS",new Date());
+		Assignment as = new Assignment("Math HW","Calc Worksheet","PHS",new Date(),3);
 		am = new AssignmentMenu();
 		am.addAssignment(as);
 		//System.out.println(am.dispAssignAsStr());
-		Assignment as2 = new Assignment("Eng HW","Write the essay","PHS",new Date());
+		Assignment as2 = new Assignment("Eng HW","Write the essay","PHS",new Date(),10);
 		am.addAssignment(as2);
 		
-	    window.setText("Your Assignments:\n\n"+am.dispAssignAsStr());
+	    window.updateDisp("Your Assignments:\n\n"+am.dispAssignAsStr());
 	}
 }

@@ -12,7 +12,7 @@ public class Assignment {
 	private static int assignmentNum = 0;
 	
 	//Constructors
-	public Assignment(String nname, String ndesc, String nschool, Date ndate){
+	public Assignment(String nname, String ndesc, String nschool, Date ndate, int diff){
 		name = nname;
 		desc = ndesc;
 		school = nschool;
@@ -20,7 +20,7 @@ public class Assignment {
 		complete = false;
 		assignmentNum++;
 		aID = assignmentNum;
-		difficulty = 5;
+		difficulty = diff;
 	}
 	
 	//Methods
@@ -74,7 +74,7 @@ public class Assignment {
 	
 	//Application
 	public static void main(String[] args){
-		Assignment as = new Assignment("a","beee","PHS",new Date());
+		Assignment as = new Assignment("a","beee","PHS",new Date(),5);
 		System.out.println(as);
 	}
 }
