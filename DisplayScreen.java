@@ -4,7 +4,7 @@ import java.util.Date;
 
 import javax.swing.*;
 
-public class DisplayScreen extends JFrame implements ActionListener{
+public class DisplayScreen extends JFrame implements ActionListener, ReceiveAssignment{
 	private JTextArea banner;
 	private JTextField toggle;
 	private JButton addbutton;
@@ -19,10 +19,7 @@ public class DisplayScreen extends JFrame implements ActionListener{
 		banner = new JTextArea("");
 		banner.setEditable(false);
 	    banner.setFont(new Font("Serif", Font.BOLD, 14));
-	    
-		assignname = new JTextField("");
-		assignname.setFont(new Font("Serif", Font.PLAIN, 14));
-	    
+	   
 	    addbutton = new JButton("Add Assignment");
 	    addbutton.setFont(new Font("Serif", Font.PLAIN, 14));
 	    addbutton.addActionListener(new ActionListener()
@@ -30,13 +27,7 @@ public class DisplayScreen extends JFrame implements ActionListener{
 	    	public void actionPerformed(ActionEvent e)
 	    	{
 	    		//TODO Remove some of this useless syso comments
-	    		if (!toggle.getText().isEmpty()){
-	    			Assignment a = am.getAssignment(toggle.getText());
-	    			if (a != null){
-	    				a.toggleCompletion();
-	    				updateDisp("Your Assignments:\n\n"+am.dispAssignAsStr());
-	    			}
-	    		}
+	    		setVisible(false);
 	    	}
 	    });
 		
@@ -72,6 +63,9 @@ public class DisplayScreen extends JFrame implements ActionListener{
 
 	    c.gridwidth = 1;c.gridy = 1;c.gridx = 1;c.fill = GridBagConstraints.HORIZONTAL;c.weightx = 0.1;
 	    pane.add(button,c);
+	    
+	    c.gridwidth = 2;c.gridy = 2;c.gridx = 0;c.fill = GridBagConstraints.HORIZONTAL;c.weightx = 1;
+	    pane.add(addbutton,c);
 	}
 	
 	public void updateDisp(String n){
@@ -84,6 +78,10 @@ public class DisplayScreen extends JFrame implements ActionListener{
 
 	}
 
+	public void receiveObj(Assignment a){
+		am.addAssignment(a);
+		updateDisp("Your Assignments:\n\n"+am.dispAssignAsStr());
+	}
 	public static void main(String[] args){
 		DisplayScreen window = new DisplayScreen();
 		window.setBounds(50, 50, 520, 310);
