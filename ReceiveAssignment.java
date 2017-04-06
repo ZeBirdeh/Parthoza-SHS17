@@ -1,3 +1,4 @@
+
 public interface ReceiveAssignment {
-	public void receiveObj(Assignment a);
+	void receiveAssignment(Assignment a);
 }

@@ -4,13 +4,13 @@ import java.util.Date;
 
 import javax.swing.*;
 
-public class DisplayScreen extends JFrame implements ActionListener, ReceiveAssignment{
+public class DisplayScreen extends JFrame implements ReceiveAssignment{
 	private JTextArea banner;
 	private JTextField toggle;
 	private JButton addbutton;
-	private JTextField assignname;
+	//private JTextField assignname;
 	private JButton button;
-	private static AssignmentMenu am;
+	public AssignmentMenu am;
 	
 	public DisplayScreen(){
 		super("Display");
@@ -19,15 +19,17 @@ public class DisplayScreen extends JFrame implements ActionListener, ReceiveAssi
 		banner = new JTextArea("");
 		banner.setEditable(false);
 	    banner.setFont(new Font("Serif", Font.BOLD, 14));
-	   
+	    
+		//assignname = new JTextField("");
+		//assignname.setFont(new Font("Serif", Font.PLAIN, 14));
+	    
 	    addbutton = new JButton("Add Assignment");
 	    addbutton.setFont(new Font("Serif", Font.PLAIN, 14));
 	    addbutton.addActionListener(new ActionListener()
 	    {
 	    	public void actionPerformed(ActionEvent e)
 	    	{
-	    		//TODO Remove some of this useless syso comments
-	    		setVisible(false);
+	    		
 	    	}
 	    });
 		
@@ -63,6 +65,9 @@ public class DisplayScreen extends JFrame implements ActionListener, ReceiveAssi
 
 	    c.gridwidth = 1;c.gridy = 1;c.gridx = 1;c.fill = GridBagConstraints.HORIZONTAL;c.weightx = 0.1;
 	    pane.add(button,c);
+
+	    //c.gridwidth = 1;c.gridy = 2;c.gridx = 0;c.fill = GridBagConstraints.HORIZONTAL;c.weightx = 0.1;
+	    //pane.add(assignname,c);
 	    
 	    c.gridwidth = 2;c.gridy = 2;c.gridx = 0;c.fill = GridBagConstraints.HORIZONTAL;c.weightx = 1;
 	    pane.add(addbutton,c);
@@ -73,15 +78,12 @@ public class DisplayScreen extends JFrame implements ActionListener, ReceiveAssi
 		banner.setText(n);
 		banner.setBackground(new Color(ratio<255?ratio:255,ratio>255?510-ratio:255,0));
 	}
-	
-	public void actionPerformed(ActionEvent arg0) {
 
-	}
-
-	public void receiveObj(Assignment a){
+	public void receiveAssignment(Assignment a) {
 		am.addAssignment(a);
 		updateDisp("Your Assignments:\n\n"+am.dispAssignAsStr());
 	}
+	
 	public static void main(String[] args){
 		DisplayScreen window = new DisplayScreen();
 		window.setBounds(50, 50, 520, 310);
@@ -90,12 +92,13 @@ public class DisplayScreen extends JFrame implements ActionListener, ReceiveAssi
 	    window.setVisible(true);
 	    
 		Assignment as = new Assignment("Math HW","Calc Worksheet","PHS",new Date(),3);
-		am = new AssignmentMenu();
-		am.addAssignment(as);
+		window.am = new AssignmentMenu();
+		window.am.addAssignment(as);
 		//System.out.println(am.dispAssignAsStr());
 		Assignment as2 = new Assignment("Eng HW","Write the essay","PHS",new Date(),10);
-		am.addAssignment(as2);
+		window.am.addAssignment(as2);
 		
-	    window.updateDisp("Your Assignments:\n\n"+am.dispAssignAsStr());
+	    window.updateDisp("Your Assignments:\n\n"+window.am.dispAssignAsStr());
 	}
+
 }
